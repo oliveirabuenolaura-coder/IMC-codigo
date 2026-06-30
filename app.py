@@ -1,38 +1,22 @@
+import random
+import string
 
-import streamlit as st
+def gerar_senha(tamanho=12):
+    # Define os caracteres que a senha pode ter
+    caracteres = string.ascii_letters + string.digits + string.punctuation
+    
+    # Gera a senha escolhendo caracteres aleatórios
+    senha = ''.join(random.choice(caracteres) for _ in range(tamanho))
+    return senha
 
-# Configuração do título da página
-st.set_page_config(page_title="Calculadora de IMC", page_icon="⚖️")
-
-st.title("⚖️ Calculadora de IMC")
-st.write("Descubra o seu Índice de Massa Corporal de forma rápida.")
-
----
-
-# Entrada de dados do usuário
-peso = st.number_input("Digite seu peso (em kg):", min_value=0.0, format="%.2f")
-altura = st.number_input("Digite sua altura (em metros):", min_value=0.0, format="%.2f")
-
-# Botão para calcular
-if st.button("Calcular IMC"):
-    if peso > 0 and altura > 0:
-        # Cálculo do IMC
-        imc = peso / (altura ** 2)
-        
-        st.subheader(f"Seu IMC é: **{imc:.2f}**")
-        
-        # Classificação do IMC
-        if imc < 18.5:
-            st.warning("Classificação: Abaixo do peso")
-        elif 18.5 <= imc < 25:
-            st.success("Classificação: Peso ideal (parabéns!)")
-        elif 25 <= imc < 30:
-            st.warning("Classificação: Levemente acima do peso")
-        elif 30 <= imc < 35:
-            st.error("Classificação: Obesidade Grau I")
-        elif 35 <= imc < 40:
-            st.error("Classificação: Obesidade Grau II (severa)")
-        else:
-            st.error("Classificação: Obesidade Grau III (mórbida)")
+# Execução do programa no terminal
+print("--- GERADOR DE SENHAS SEGUIRAS ---")
+try:
+    comprimento = int(input("Digite o tamanho da senha desejada (ex: 12): "))
+    if comprimento < 4:
+        print("Para sua segurança, a senha deve ter pelo menos 4 caracteres.")
     else:
-        st.error("Por favor, insira valores válidos para peso e altura.")
+        senha_gerada = gerar_senha(comprimento)
+        print(f"\nSua nova senha é: {senha_gerada}")
+except ValueError:
+    print("Por favor, digite um número válido.")
